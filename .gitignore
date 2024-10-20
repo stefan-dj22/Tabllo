@@ -1,0 +1,14 @@
+# Ignore Java/Spring files
+/backend/target/
+/backend/.classpath
+/backend/.project
+/backend/.settings/
+
+# Ignore React files
+/frontend/node_modules/
+/frontend/build/
+/frontend/.env
+
+# Ignor Docker files and  logs
+*.log
+docker-compose.override.yml
