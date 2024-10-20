@@ -10,5 +10,5 @@
 /frontend/.env
 
 # Ignor Docker files and  logs
-*.log
-docker-compose.override.yml
+/docker/*.log
+/docekr/docker-compose.override.yml
