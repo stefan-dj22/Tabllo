@@ -1,0 +1,62 @@
+Da, Docker Compose takođe koristi `.dockerignore` fajlove. Kada definišeš servise u `docker-compose.yml` fajlu i koristiš `build` opciju za izgradnju slika, Docker Compose će primeniti `.dockerignore` fajlove u kontekstu build-a za svaki servis.
+
+### Kako to funkcioniše:
+1. **Kontekst build-a**: Kada koristiš `docker-compose up --build`, Docker Compose će za svaki servis koji koristi `build` opciju u `docker-compose.yml` izgraditi sliku iz definisanog konteksta. Ovaj kontekst obično odgovara folderu u kojem se nalazi Dockerfile za taj servis.
+
+2. **Primena `.dockerignore`**: Prilikom izgradnje slike, Docker će koristiti odgovarajući `.dockerignore` fajl iz tog foldera da isključi fajlove i direktorijume prilikom slanja konteksta build-a.
+
+### Primer `docker-compose.yml`:
+```yaml
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend-app
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+```
+
+# Ignoriši maven/gradle build direktorijume i lokalne konfiguracije
+target/
+build/
+
+# Ignore git and version control filesIgnor
+.git
+.gitignore
+.idea
+*.iml
+
+# Ignore local config and temp files# Ignore Maven/Gradle build directories and local configurations
+target/
+build/
+
+# Ignore versioned directories and configuration files
+.git
+.gitignore
+.idea
+*.iml
+
+# Ignore local configurations and temporary files
+*.env
+*.log
+*.tmp
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+*.env
+*.log
+*.tmp
+
+# Ignore all OS specific files
+.DS_Store
+Thumbs.db
