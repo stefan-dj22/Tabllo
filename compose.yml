@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: "secret"
       POSTGRES_DB: "tabllo-db"
     volumes:
-      - ./data:/var/lib/postgresql/data    # Save db data
+      - ./db-data:/var/lib/postgresql/data    # Save db data
       - ./db/init-scripts:/docker-entrypoint-initdb.d # Init tables
     ports:
       - "5432:5432"

@@ -12,3 +12,6 @@
 # Ignor Docker files and  logs
 /docker/*.log
 /docekr/docker-compose.override.yml
+
+#db data
+/db-data
