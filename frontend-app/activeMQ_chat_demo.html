@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="script" href="js/lib/stomp.js">
+    <link rel="stylesheet" href="chat.css">
+</head>
+
+<body>
+    <h2>Demo app</h2>
+    <p>Click on the button at the bottom of this page to open the chat form.</p>
+    <p>ActiveMQ is used for message transfer, using STOMP over WebSocket.
+    </p>
+    <br>
+    <label>URL:
+        <input type="text" id="i_URL">
+    </label>
+    <br><br>
+    <label>SendTo:
+        <input type="text" id="i_sendTo">
+    </label>
+    <br><br>
+    <label>RecvFrom:
+        <input type="text" id="i_recvFrom">
+    </label>
+    <br><br>
+    <label>Connection status:</label>
+    <label id="l_connStatus">Disconnected</label>
+    <button id="btn_connect">Connect</button>
+    <br>
+    <br>
+    <h2>Messages:</h2>
+    <p id="p_messages">Messages will appear here</p>
+
+    <button class="open-button" onclick="chatForm_open()">Chat</button>
+
+    <div class="chat-popup" id="chatForm">
+        <div class="form-container">
+            <h1>Chat</h1>
+
+            <label><b>MyUserId:</b>
+                <input type="text" id="i_myUserId"><br><br>
+            </label>
+            
+            <label><b>Message</b>
+                <textarea placeholder="Type message.." name="msg" id="txt_msg" required></textarea>
+            </label>
+
+            <button class="btn" id="btn_send">Send</button>
+            <button type="button" class="btn cancel" onclick="chatForm_close()">Close</button>
+        </div>
+    </div>
+
+    <script src="js/lib/stomp.js"></script>
+    <script src="js/demo_chat.js"></script>
+</body>
+
+</html>
