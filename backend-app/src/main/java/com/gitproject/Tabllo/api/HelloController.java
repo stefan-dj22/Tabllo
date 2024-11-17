@@ -1,4 +1,4 @@
-package com.gitproject.Tabllo;
+package com.gitproject.Tabllo.api;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
