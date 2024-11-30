@@ -3,6 +3,8 @@ package com.gitproject.Tabllo.api;
 import com.gitproject.Tabllo.api.model.UserCreationRequest;
 import com.gitproject.Tabllo.repository.model.User;
 import com.gitproject.Tabllo.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -16,15 +18,20 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
-    public Optional<User> getUser(@PathVariable long id)
+    @GetMapping("/{username}")
+    public Optional<User> getUser(@PathVariable String username )
     {
-        return userService.getUser(id);
+        return userService.getUser(username);
     }
 
     @PostMapping
-    public User createUser(@RequestBody UserCreationRequest userCreationRequest)
+    public ResponseEntity<User> createUser(@RequestBody UserCreationRequest userCreationRequest)
     {
-        return userService.createUser(userCreationRequest);
+        User user = userService.createUser(userCreationRequest);
+        if( user ==null) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(user,HttpStatus.CREATED);
     }
 }
