@@ -86,7 +86,18 @@
 				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
 					<argLine>-XX:+EnableDynamicAgentLoading</argLine>
+					<includes>
+						<include>**/*UT*.java</include>
+					</includes>
 				</configuration>
+				<!-- Unit tests -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -101,6 +112,28 @@
 						</manifest>
 					</archive>
 				</configuration>
+			</plugin>
+
+			<!-- Integration tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.2.5</version>
+				<configuration>
+					<includes>
+						<include>**/*IT*.java</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>default-integration-test</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

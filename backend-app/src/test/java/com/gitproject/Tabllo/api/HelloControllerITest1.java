@@ -1,4 +1,4 @@
-package com.gitproject.Tabllo;
+package com.gitproject.Tabllo.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TablloApplicationUTest {
+public class HelloControllerITest1 {
     @Autowired
     private MockMvc mvc;
 

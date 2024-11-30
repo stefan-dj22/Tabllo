@@ -1,6 +1,5 @@
-package com.gitproject.Tabllo;
+package com.gitproject.Tabllo.api;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 //@Disabled("Disabled, using only UT")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class TablloApplicationITest {
+public class HelloControllerITest2 {
 
 	@Autowired
 	private TestRestTemplate template;
