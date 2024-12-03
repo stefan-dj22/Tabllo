@@ -3,6 +3,7 @@ package com.gitproject.Tabllo.service;
 import com.gitproject.Tabllo.api.model.UserCreationRequest;
 import com.gitproject.Tabllo.repository.UserRepository;
 import com.gitproject.Tabllo.repository.model.User;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,4 +28,15 @@ public class UserService {
     {
         return userRepository.findByUsername(username);
     }
+    @Transactional
+    public boolean deleteUserByUsername(final String username)
+    {
+        if(userRepository.existsByUsername(username))
+        {
+            userRepository.deleteByUsername((username));
+            return true;
+        }
+        return false;
+    }
+
 }
