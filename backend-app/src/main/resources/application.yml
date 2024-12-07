@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tabllo-db
+    username: user
+    password: secret
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
