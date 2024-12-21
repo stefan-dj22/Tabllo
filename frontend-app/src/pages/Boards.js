@@ -63,7 +63,9 @@ SBoardSchemeBar.displayName = 'BoardSchemeBar';
 const Boards = () => {
     const boards = getUserBoards("user1"); //TODO: user1 should be getther from login information (cookies maybe)
     //if (!boards) return;
-  
+    const newBoardReq = (board) =>{
+      console.log('Send board: '+ board+'to server...');
+    }
     return (
       <SWrapper>
         <STitle>
@@ -86,7 +88,7 @@ const Boards = () => {
               </SBoardItem>
             </NavLink>
           ))}
-          <BoardAdd/>
+          <BoardAdd addBoard = {newBoardReq}/>
         </SBoardList>
       </SWrapper>
     )
