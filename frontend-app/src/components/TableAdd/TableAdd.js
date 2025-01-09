@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Actions, Input, SubmitButton, CancelButton } from '../BaseComponents';
-import {boardColors} from "../../constants";
+import {tableColors} from "../../constants";
 import { useState } from "react";
 const SAddButton = styled.button`
   font-size: 1rem; 
@@ -20,7 +21,7 @@ SAddButton.displayName = 'AddButton';
 const SContainer = styled.div`
   height: 100%;
   padding: 1rem .6rem;
-  background-color: #dadde3;
+  background-color: ${props => props.color};
   border-radius: .4rem
 `;
 
@@ -49,24 +50,28 @@ const SColorPickerItem = styled.div`
     box-shadow: inset 0 0 0 10rem rgba(0, 0, 0, .1)
   }
 `;
-class Board
+class Table
 {
   construtor(Title, Color)
   {
-    this.Title=Title;
+    this.Name=Title;
     this.Color=Color;
+    this.Lists = [];
   }
 }
 
-const  BoardAdd = (props) =>
+const  TableAdd = (props) =>
 {
-const {addBoard} = props;
+const {addTable} = props;
 const [formIsOpen, setFormOpen] = useState(false);
-const [boardTitle, setBoardTitle] = useState('');
-const [boardColor, setBoardColor] = useState('');
+const [tableTitle, setTableTitle] = useState('');
+const [tableColor, setTableColor] = useState(tableColors[0]);
 
-let board = new Board();
-
+const setDefault = () => {
+  setFormOpen(false);
+  setTableTitle('');
+  setTableColor(tableColors[0]);
+}
 const handleKeyDown = (e) =>{
   if(e.keyCode === 27)
   {
@@ -74,59 +79,68 @@ const handleKeyDown = (e) =>{
   }
 };
 
+const getDataForSub = () =>
+{
+  let table = new Table();
+  table.Color = tableColor;
+  table.Name = tableTitle;
+  table.Lists = [];
+  return table;
+}
 const handleChange = (att, value) =>
 {
   if(att === 'title')
   {
-    board.Title = value;
-    setBoardTitle(value);
+    setTableTitle(value);
   }
   else
   {
-    board.Color = value;
-    setBoardColor(value);
+    setTableColor(value);
   }
 }
-if(formIsOpen)
-  return (
-  <SContainer color={boardColor}>
-    <form onSubmit={addBoard(Board)}>
+
+
+  return formIsOpen ? (
+  <SContainer color={tableColor}>
+    <form onSubmit={(e) => { 
+      e.preventDefault(); 
+      let Table = getDataForSub();
+      addTable(Table);
+      setDefault();}}>
       <Input
         type="text"
-        placeholder="Add board title"
-        value={boardTitle}
+        placeholder="Add Table title"
+        value={tableTitle}
         onKeyDown={handleKeyDown}
         onChange={(e) => handleChange("title", e.target.value)}
         spellCheck={false}
         autoFocus
       />
       <SColorPicker>
-        {boardColors.map((color, index) => (
+        {tableColors.map((color, index) => (
           <SColorPickerItem
             key={index}
             color={color}
             onClick={() => handleChange("color", color)}
           >
-            {boardColor === color && <FontAwesomeIcon icon="check" />}
+            {tableColor === color && <FontAwesomeIcon icon = {faCheck}/>}
           </SColorPickerItem>
         ))}
       </SColorPicker>
       <Actions>
-        <SubmitButton type='submit' disabled={!boardTitle}>
-          Create board
+        <SubmitButton type='submit' disabled={!tableTitle}>
+          Create Table
         </SubmitButton>
         <CancelButton onClick={() => setFormOpen(false)}>
-          <FontAwesomeIcon icon="times" />
+          <FontAwesomeIcon icon = {faTimes}/>
         </CancelButton>
       </Actions>
     </form>
-  </SContainer>);
-else
-  return(
-        <SAddButton onClick = {setFormOpen(true)} >
-        Create new board...
+  </SContainer>) : (
+      <SAddButton onClick = {() => setFormOpen(true)} >
+        Create new Table...
       </SAddButton>
     );
 }
 
-export default BoardAdd;
+export default TableAdd;

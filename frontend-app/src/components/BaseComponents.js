@@ -54,7 +54,10 @@ export const Actions = styled.div`
   align-items: center;
 `;
 
-export const SubmitButton = styled.button`
+export const SubmitButton = styled.button.attrs(props => ({
+  disabled: props.disabled
+}))
+`
   margin-right: .5rem;
   padding: .5rem .75rem;
   color: #fff;
@@ -62,21 +65,21 @@ export const SubmitButton = styled.button`
   font-size: .875rem;
   border: 0;
   background-color: ${props => 
-    props.color === 'danger' 
-      ? '#cf513d' 
+    props.disabled 
+      ? '#b04632' 
       : '#5aac44'
   };
   box-shadow: 0 1px 0 0 ${props =>
-    props.color === 'danger'
+    props.disabled
       ? '#6e2f1a'
       : '#3f6f21'
   };
   border-radius: .2rem;
-  cursor: pointer;
+  cursor: pointer
   transition: background-color .2s ease-in;
   &:hover {
     background-color: ${props =>
-      props.color === 'danger'
+      props.disabled
         ? '#b04632'
         : '#519839'
     };
