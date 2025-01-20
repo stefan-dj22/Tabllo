@@ -50,9 +50,9 @@ const SColorPickerItem = styled.div`
     box-shadow: inset 0 0 0 10rem rgba(0, 0, 0, .1)
   }
 `;
-class Table
+export class Table
 {
-  construtor(Title, Color)
+  constructor(Title, Color)
   {
     this.Name=Title;
     this.Color=Color;
@@ -121,6 +121,7 @@ const handleChange = (att, value) =>
           <SColorPickerItem
             key={index}
             color={color}
+            data-testid="color-div"
             onClick={() => handleChange("color", color)}
           >
             {tableColor === color && <FontAwesomeIcon icon = {faCheck}/>}
@@ -131,7 +132,7 @@ const handleChange = (att, value) =>
         <SubmitButton type='submit' disabled={!tableTitle}>
           Create Table
         </SubmitButton>
-        <CancelButton onClick={() => setFormOpen(false)}>
+        <CancelButton data-testid = "cancel-button" onClick={() => setFormOpen(false)}>
           <FontAwesomeIcon icon = {faTimes}/>
         </CancelButton>
       </Actions>

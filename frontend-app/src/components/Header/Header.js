@@ -54,7 +54,7 @@ const SActions = styled.div``;
 
 const HeaderNavigationList = [
     {
-      title: 'Boards',
+      title: 'Tables',
       path: '/',
       faIcon: 'columns',
     },
