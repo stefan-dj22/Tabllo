@@ -1,4 +1,4 @@
-import {createTableReqMock, getUserTablesMock} from "../api/mock/tables/tables";
+import {createTableReqMock, getUserTablesMock, getUserMock} from "../api/mock/tables/tables";
 import {NavLink} from 'react-router-dom'
 import styled from "styled-components";
 import TableAdd from "../components/TableAdd/TableAdd";
@@ -32,7 +32,7 @@ const STableItem = styled.li`
 `;
 STableItem.displayName = 'TableItem';
 
-const STableitle = styled.h2`
+const STableTitle = styled.h2`
   margin-bottom: .5rem;
   font-size: 1rem;
   color: white;
@@ -60,24 +60,52 @@ const STableSchemeBar = styled.div`
 `;
 STableSchemeBar.displayName = 'TableSchemeBar';
 
+const getUsernameFromCookies = (cookies) => {
+  const cookiesWords = cookies.split('; ');
+  const usernameCookie = cookiesWords.find(cookie => cookie.startsWith('username='));
 
+  if (!usernameCookie) {
+    throw Error("No username found in the cookies");
+  }
+    return usernameCookie.split('=')[1];  // Extract the username from the cookie
+    
+}
 const Tables = () => {
     
   let [tables, setTables] = useState([]);
-  let username = "user1"//TODO: user1 should be getther from login information (cookies maybe)
-  
+  let getUserTables, createTableReq;
+  switch(process.env.NODE_ENV)
+  {
+    case 'development':
+      {
+        const devUserStr = getUserMock(0);
+        document.cookie = "username="+devUserStr+"; path=/; secure";
+      }
+    case 'test':
+      {
+        getUserTables = getUserTablesMock;
+        createTableReq = createTableReqMock;
+      }
+      default: {}
+  }
+  const username = getUsernameFromCookies(document.cookie);
   const loadTables = () => 
   {
-    getUserTablesMock(username)
-    .then((res) => res.json())
+    getUserTables(username)
+    .then((response) => 
+      {
+        console.log("\n[TEST LOG] response: "+ response.statusText);
+        return response.json();
+      })
     .then((data) => {
+      console.log("\n[TEST LOG] response data: "+ data);
       setTables(data)
     } ); 
   }
   const newTableReq = (table) =>{
     console.log('Send Table: '+JSON.stringify(table)+' to server...');
     
-    createTableReqMock(table,username)
+    createTableReq(table,username)
     .then((response)=>{
       if (response.ok)
       {
@@ -112,9 +140,9 @@ const Tables = () => {
           {tables.map((Table, index) => (
             <NavLink key={index} to={`/b/${Table.Id}`}>
               <STableItem color={Table.Color}>
-                <STableitle>
+                <STableTitle>
                   {Table.Name}
-                </STableitle>
+                </STableTitle>
                 <STableScheme>
                   {Table.Lists.map((list, index) => {
                     return (

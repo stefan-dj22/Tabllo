@@ -50,15 +50,24 @@ const mockData = {
         }
     ]
 };
+const mockUsers = [ 'user1','user2'];
 let genId = 5;
 const setDelay = (ms) => new Promise((res) => {setTimeout(res,ms)});
-function getUserTables(username) {
+
+export function getUserMockData(username) {
     return mockData[username] || [];
+}
+
+export const getUserMock = (userOrderNum) =>
+{
+    if(userOrderNum > mockUsers.length-1)
+        throw RangeError("The number of mock users is:" + mockUsers.length); 
+    return mockUsers[userOrderNum];
 }
 
 export async function getUserTablesMock(username){
     await setDelay(1000);
-    const responseBody = JSON.stringify(getUserTables(username)); // Convert data to JSON
+    const responseBody = JSON.stringify(getUserMockData(username)); // Convert data to String
     return new Response(responseBody, {
       status: 200, // HTTP status code
       statusText: "OK",
@@ -66,8 +75,9 @@ export async function getUserTablesMock(username){
 }
 
 // Mock POST request
+export const reqTimeoutTime = 1000;
 export async function createTableReqMock(newData,username) {
-  await setDelay(1000); // Simulate 1-second delay
+  await setDelay(reqTimeoutTime); // Simulate 1-second delay
 
   let okRespBody = JSON.stringify({status: "ok", message: "Data successfully added."});
   let errRespBody= JSON.stringify({status: "error", message: "Failed to add data."})
