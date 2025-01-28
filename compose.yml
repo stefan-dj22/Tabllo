@@ -11,7 +11,7 @@ services:
       - ./db/init-scripts:/docker-entrypoint-initdb.d # Init tables
     ports:
       - "5432:5432"
-
+  
   activemq:
     image: apache/activemq-classic:5.18.6
     environment:
@@ -33,3 +33,17 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+
+  client:
+    build:
+      context: ./
+      target: client-dev
+    develop:
+      watch:
+        - path: ./frontend-app/src
+          action: sync
+          target: usr/local/app/src
+        - path: ./frontend-app/package.json
+          action: rebuild
+    ports: 
+      - "3000:3000"
