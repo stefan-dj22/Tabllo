@@ -33,3 +33,25 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+    
+  backend-app:
+    build:
+      context: ./backend-app/
+    depends_on:
+      db:
+        condition: service_started
+      activemq:
+        #condition: service_healthy
+        condition: service_started
+    develop:
+      watch:
+        - path: ./backend-app/src
+          action: sync
+          target: usr/local/backend-app/src
+        - path: ./backend-app/pom.xml
+          action: rebuild
+    ports: 
+      - "8080:8080"
+    links:
+      - db:database
+      - activemq:activemq

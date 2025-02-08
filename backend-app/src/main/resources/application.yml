@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/tabllo-db
+    url: jdbc:postgresql://database:5432/tabllo-db
     username: user
     password: secret
   jpa:

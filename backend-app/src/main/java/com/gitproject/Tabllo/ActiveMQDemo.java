@@ -47,7 +47,7 @@ public class ActiveMQDemo {
         // Create a ConnectionFactory
         String username = "tabllo_user";
         String password = "tabllo12345";
-        ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory("tcp://localhost:61616");
+        ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory("tcp://activemq:61616");
         cf.setUserName(username);
         cf.setPassword(password);
 
