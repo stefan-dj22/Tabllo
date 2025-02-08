@@ -11,6 +11,12 @@ services:
       - ./db/init-scripts:/docker-entrypoint-initdb.d # Init tables
     ports:
       - "5432:5432"
+    healthcheck:
+      test: pg_isready | grep "accepting connections"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   activemq:
     image: apache/activemq-classic:5.18.6
@@ -28,7 +34,7 @@ services:
       - "61616:61616" #openwire
       - "8161:8161" #web admin GUI
     healthcheck:
-      test: /opt/activemq/bin/activemq query --objname type=Broker,brokerName=*,service=Health | grep Good
+      test: activemq status | grep running
       interval: 10s
       timeout: 5s
       retries: 5
@@ -39,10 +45,9 @@ services:
       context: ./backend-app/
     depends_on:
       db:
-        condition: service_started
+        condition: service_healthy
       activemq:
-        #condition: service_healthy
-        condition: service_started
+        condition: service_healthy
     develop:
       watch:
         - path: ./backend-app/src
@@ -52,6 +57,12 @@ services:
           action: rebuild
     ports: 
       - "8080:8080"
+    healthcheck:
+      test: curl -Is http://localhost:8080 | head -n 1 | grep "200"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     links:
       - db:database
       - activemq:activemq
