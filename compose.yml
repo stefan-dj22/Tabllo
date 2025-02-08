@@ -66,3 +66,17 @@ services:
     links:
       - db:database
       - activemq:activemq
+
+  client:
+    build:
+      context: ./
+      target: client-dev
+    develop:
+      watch:
+        - path: ./frontend-app/src
+          action: sync
+          target: usr/local/app/src
+        - path: ./frontend-app/package.json
+          action: rebuild
+    ports: 
+      - "3000:3000"
