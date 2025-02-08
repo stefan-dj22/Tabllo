@@ -8,7 +8,6 @@ import javax.jms.ConnectionFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
 public class ActiveMQDemoUTest {
     @Test
     public void testDestinationParsing_valid() throws Exception

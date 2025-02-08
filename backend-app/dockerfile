@@ -1,0 +1,12 @@
+FROM maven:3.9.9-eclipse-temurin-21-alpine AS backed-app
+# Set the working directory in the container
+WORKDIR /usr/local/backend-app
+# Copy the pom.xml and the project files to the container
+COPY pom.xml .
+COPY src ./src
+# Build the application using Maven
+RUN mvn clean
+# Set the working directory in the container
+WORKDIR /usr/local/backend-app
+# Set the command to build and run the app
+CMD ["/bin/bash","-c","mvn package -DskipTests && java -jar ./target/Tabllo-0.0.1-SNAPSHOT.jar"]
