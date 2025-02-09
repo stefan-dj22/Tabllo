@@ -48,13 +48,9 @@ services:
         condition: service_healthy
       activemq:
         condition: service_healthy
-    develop:
-      watch:
-        - path: ./backend-app/src
-          action: sync
-          target: usr/local/backend-app/src
-        - path: ./backend-app/pom.xml
-          action: rebuild
+    volumes:
+      - ./backend-app/src:/usr/local/backend-app/src:ro
+      - ./backend-app/pom.xml:/usr/local/backend-app/pom.xml:ro
     ports: 
       - "8080:8080"
     healthcheck:
