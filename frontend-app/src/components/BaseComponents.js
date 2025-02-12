@@ -9,9 +9,15 @@ export const Text = styled.p`
 export const Label = styled.label`
   font-size: .75rem;
   line-height: 1.3rem;
-  color: #6b778c;
+  color: ${props => props.color};
+  display: ${props => props.display};
   font-weight: 600;
 `;
+
+Label.defaultProps = {
+  color: "#6b778c",
+  display: "block"
+}
 
 export const Input = styled.input`
   max-width: 100%;
